@@ -1,3 +1,4 @@
 POST http://localhost:3001/play/a
-
+###
+GET http://localhost:3001/play
 
