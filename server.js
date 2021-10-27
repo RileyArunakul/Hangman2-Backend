@@ -40,7 +40,7 @@ function reInitialize() {
 }
 
 //Send the guess
-app.post("/play/:guess", (req, res) => {
+app.post("/play/:playerId/:guess", (req, res) => {
   let correctGuess = req.params.guess;
   guessIndexes = [];
   for (let i = 0; i < activeWord.length; i++) {
@@ -49,6 +49,7 @@ app.post("/play/:guess", (req, res) => {
       currentWord[i] = correctGuess;
     }
   }
+  console.log(req.params.playerId);
   io.emit("new-guess", "NEW_GUESS");
   res.json({
     success: true,
@@ -77,6 +78,7 @@ let connectedUsers = [];
 
 io.on("connection", function (socket) {
   connectedUsers.push(socket.id);
+  // io.emit().broadcast
   socket.on("new-guess", function (data) {
     console.log(data);
     io.emit("new-guess", data);
